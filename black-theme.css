@@ -1,0 +1,50 @@
+/* black-theme.css */
+
+:root {
+  --background-color: #000000;
+  --text-color: #ffffff;
+  --hover-color: #444444;
+  --active-color: #333333;
+}
+
+body {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+#content {
+  background-color: var(--background-color) !important;
+}
+
+#container {
+  background-color: var(--background-color) !important;
+}
+
+#guide {
+  background-color: var(--background-color) !important;
+}
+
+#guide .guide-item {
+  color: var(--text-color) !important;
+}
+
+#guide .guide-item:hover {
+  background-color: var(--hover-color) !important;
+}
+
+#guide .guide-item.selected {
+  background-color: var(--active-color) !important;
+  color: var(--text-color) !important;
+}
+
+ytd-mini-guide-renderer {
+  background-color: var(--background-color) !important;
+}
+
+#guide-content.ytd-app {
+  background-color: var(--background-color) !important;
+}
+
+#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
+  background-color: var(--background-color) !important;
+}
