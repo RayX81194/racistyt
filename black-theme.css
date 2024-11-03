@@ -2,14 +2,14 @@
 
 :root {
   --background-color: #000000;
-  --text-color: #ffffff;
   --hover-color: #444444;
   --active-color: #333333;
+  --bar:#FF0033;
+
 }
 
 body {
   background-color: var(--background-color) !important;
-  color: var(--text-color) !important;
 }
 
 #content {
@@ -41,6 +41,14 @@ ytd-mini-guide-renderer {
   background-color: var(--background-color) !important;
 }
 
+ytd-mini-guide-entry-renderer{
+  background-color: var(--background-color) !important ;
+}
+
+ytd-reel-shelf-renderer{
+  display: none !important;
+}
+
 #guide-content.ytd-app {
   background-color: var(--background-color) !important;
 }
@@ -48,3 +56,67 @@ ytd-mini-guide-renderer {
 #chips-wrapper.ytd-feed-filter-chip-bar-renderer {
   background-color: var(--background-color) !important;
 }
+
+ytd-author-comment-badge-renderer{
+  background-color: var(--background-color) !important ;
+}
+
+#page-header.ytd-tabbed-page-header{
+  background-color: var(--background-color) !important ;
+}
+
+#tabs-inner-container.ytd-tabbed-page-header{
+  background-color: var(--background-color) !important ;
+}
+
+#page-header-banner{
+  background-color: var(--background-color) !important ;
+}
+
+#ryd-bar{
+  background: var(--bar) !important ;
+}
+
+#sponsor-button {
+  display: none !important;
+}
+#subscribe-button{
+  display: none !important;
+}
+#chips{
+  display: none !important;
+}
+
+ytd-feed-filter-chip-bar-renderer{
+  display: none !important;
+}
+
+.title.ytd-mini-guide-entry-renderer{
+  display: none !important;
+}
+
+.ytd-notification-topbar-button-renderer{
+  display: none !important;
+}
+
+#voice-search-button{
+  display: none !important;
+}
+
+ytd-topbar-menu-button-renderer.style-scope.ytd-masthead.style-default{
+  display: none !important;
+}
+
+#thumbnail{
+  filter: opacity(0.7)
+}
+
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+
+
+
+
