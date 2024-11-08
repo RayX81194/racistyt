@@ -1,0 +1,126 @@
+/* black-theme.css */
+
+:root {
+  --background-color: #000000;
+  --hover-color: #444444;
+  --active-color: #333333;
+  --bar:#FF0033;
+
+}
+
+body {
+  background-color: var(--background-color) !important;
+}
+
+#content {
+  background-color: var(--background-color) !important;
+}
+
+#container {
+  background-color: var(--background-color) !important;
+}
+
+#guide {
+  background-color: var(--background-color) !important;
+}
+
+#guide .guide-item {
+  color: var(--text-color) !important;
+}
+
+#guide .guide-item:hover {
+  background-color: var(--hover-color) !important;
+}
+
+#guide .guide-item.selected {
+  background-color: var(--active-color) !important;
+  color: var(--text-color) !important;
+}
+
+ytd-mini-guide-renderer {
+  background-color: var(--background-color) !important;
+}
+
+ytd-mini-guide-entry-renderer{
+  background-color: var(--background-color) !important ;
+}
+
+ytd-reel-shelf-renderer{
+  display: none !important;
+}
+
+#guide-content.ytd-app {
+  background-color: var(--background-color) !important;
+}
+
+#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
+  background-color: var(--background-color) !important;
+}
+
+ytd-author-comment-badge-renderer{
+  background-color: var(--background-color) !important ;
+}
+
+#page-header.ytd-tabbed-page-header{
+  background-color: var(--background-color) !important ;
+}
+
+#tabs-inner-container.ytd-tabbed-page-header{
+  background-color: var(--background-color) !important ;
+}
+
+#page-header-banner{
+  background-color: var(--background-color) !important ;
+}
+
+#ryd-bar{
+  background: var(--bar) !important ;
+}
+
+#sponsor-button {
+  display: none !important;
+}
+#subscribe-button{
+  display: none !important;
+}
+#chips{
+  display: none !important;
+}
+
+ytd-feed-filter-chip-bar-renderer{
+  display: none !important;
+}
+
+.title.ytd-mini-guide-entry-renderer{
+  display: none !important;
+}
+
+.ytd-notification-topbar-button-renderer{
+  display: none !important;
+}
+
+#voice-search-button{
+  display: none !important;
+}
+
+ytd-topbar-menu-button-renderer.style-scope.ytd-masthead.style-default{
+  display: none !important;
+}
+
+ytd-recognition-shelf-renderer{
+  display: none !important;
+}
+
+#thumbnail{
+  filter: opacity(0.7)
+}
+
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+
+
+
+
