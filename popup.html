@@ -1,18 +1,148 @@
-<!-- popup.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Font Selector</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RacistYT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #18181b;
+            color: #ffffff;
+            font-family: "Readex Pro", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            width: 320px;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .control-group {
+            margin: 20px 0;
+        }
+
+        .control-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        label {
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        select {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            font-size: 14px;
+            min-width: 120px;
+        }
+
+        #toggleButton {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        #toggleButton img {
+            width: 50px;
+            height: 40px;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #d11717;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            color: #877878;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #d30f0f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <label for="font-select">Choose a font:</label>
-    <select id="font-select">
-        <option value="Readex Pro">Readex Pro</option>
-        <option value="Roboto">Roboto</option>
-        <option value="Lato">Lato</option>
-        <option value="Montserrat">Montserrat</option>
-        <!-- Add more font options as needed -->
-    </select>
+    <div class="container">
+        <div class="header">
+            <img src="icon128.png" alt="Extension Icon">
+            <h1>RacistYT</h1>
+        </div>
+        
+        <div class="control-group">
+            <div class="control-item">
+                <label for="font-select">Choose Font:</label>
+                <select id="font-select">
+                    <option value="Readex Pro">Readex Pro</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Montserrat">Montserrat</option>
+                </select>
+            </div>
+
+            <div class="control-item">
+                <label>Hide Shorts:</label>
+                <button id="toggleButton">
+                    <img id="toggleIcon" src="assets/on.svg" alt="Toggle Shorts">
+                </button>
+            </div>
+        </div>
+
+        <div class="note">
+            <p>*Reload the page after changes</p>
+        </div>
+
+        <div class="footer">
+            <span>Made by <a href="https://rayx81194.github.io/" target="_blank">Ray</a></span><br>
+            <span>Source on <a href="https://github.com/RayX81194/racistyt/" target="_blank">GitHub</a></span>
+        </div>
+    </div>
+    
     <script src="popup.js"></script>
 </body>
 </html>

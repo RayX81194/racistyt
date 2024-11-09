@@ -1,6 +1,6 @@
 // content.js
 
-// Function to remove existing theme styles
+// Remove existing styles to avoid duplicate fonts
 function removeExistingStyles() {
     const existingStyles = document.querySelectorAll('link[rel="stylesheet"]');
     existingStyles.forEach(style => {
@@ -10,15 +10,7 @@ function removeExistingStyles() {
     });
 }
 
-// Immediately apply the black theme
-const theme = 'black';
-removeExistingStyles();
-const link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = chrome.runtime.getURL(`${theme}-theme.css`);
-document.head.appendChild(link);
-
-// Function to apply the selected font
+// Apply the selected font
 function applyFont(font) {
     const style = document.createElement('style');
     style.textContent = `
@@ -30,8 +22,34 @@ function applyFont(font) {
     document.head.appendChild(style);
 }
 
-// Retrieve and apply the selected font from storage
+// Retrieve saved font and apply on page load
 chrome.storage.sync.get('selectedFont', ({ selectedFont }) => {
-    const font = selectedFont || 'Readex Pro'; // Default font
+    const font = selectedFont || 'Readex Pro';
     applyFont(font);
+});
+
+// Function to toggle shorts visibility
+function toggleShortsVisibility(hide) {
+    document.querySelectorAll('ytd-mini-guide-entry-renderer .title').forEach((title) => {
+        if (title.textContent.trim() === 'Shorts') {
+            title.closest('ytd-mini-guide-entry-renderer').style.display = hide ? 'none' : '';
+        }
+    });
+}
+
+// Apply initial shorts visibility state
+chrome.storage.sync.get('shortsHidden', ({ shortsHidden }) => {
+    toggleShortsVisibility(shortsHidden);
+});
+
+// Listen for messages to update font or shorts visibility
+chrome.runtime.onMessage.addListener((message) => {
+    if (message.action === 'changeFont') {
+        removeExistingStyles();
+        applyFont(message.font);
+    } else if (message.action === 'hideShorts') {
+        toggleShortsVisibility(true);
+    } else if (message.action === 'showShorts') {
+        toggleShortsVisibility(false);
+    }
 });
