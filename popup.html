@@ -1,148 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RacistYT</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RacistYT</title>
 
-        body {
-            background-color: #18181b;
-            color: #ffffff;
-            font-family: "Readex Pro", sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 300px;
-            width: 320px;
-            padding: 20px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-        .container {
-            width: 100%;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+body {
+    background: #0f0f11;
+    font-family: "Inter", sans-serif;
+    color: #e5e5e5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    height: 280px;
+}
 
-        .header img {
-            width: 50px;
-            height: 50px;
-        }
+.container {
+    width: 100%;
+    padding: 18px;
+    background: #18181b;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
 
-        .header h1 {
-            font-size: 20px;
-            font-weight: bold;
-            color: #ffffff;
-        }
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 18px;
+}
 
-        .control-group {
-            margin: 20px 0;
-        }
+.header h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
 
-        .control-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-        }
+/* Controls */
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
 
-        label {
-            font-size: 14px;
-            color: #e0e0e0;
-        }
+.control-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        select {
-            background-color: #333333;
-            color: #ffffff;
-            border: 1px solid #444444;
-            border-radius: 5px;
-            font-size: 14px;
-            min-width: 120px;
-        }
+label {
+    font-size: 13px;
+    color: #a1a1aa;
+}
 
-        #toggleButton {
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
+/* Select */
+select {
+    background: #232326;
+    border: none;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+}
 
-        #toggleButton img {
-            width: 50px;
-            height: 40px;
-        }
+/* Toggle Switch */
+.switch {
+    position: relative;
+    width: 38px;
+    height: 20px;
+}
 
-        .note {
-            font-size: 12px;
-            color: #d11717;
-            text-align: center;
-            margin-top: 10px;
-        }
+.switch input {
+    display: none;
+}
 
-        .footer {
-            text-align: center;
-            margin-top: 15px;
-            color: #877878;
-            font-size: 14px;
-        }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #3f3f46;
+    border-radius: 20px;
+    transition: 0.3s;
+}
 
-        .footer a {
-            color: #d30f0f;
-            text-decoration: none;
-            font-weight: 500;
-        }
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+input:checked + .slider {
+    background: #22c55e;
+}
+
+input:checked + .slider::before {
+    transform: translateX(18px);
+}
+
+/* Note */
+.note {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #71717a;
+    text-align: center;
+}
+
+/* Footer */
+.footer {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 11px;
+    color: #52525b;
+}
+
+.footer a {
+    color: #a1a1aa;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #ffffff;
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="icon128.png" alt="Extension Icon">
-            <h1>RacistYT</h1>
-        </div>
-        
-        <div class="control-group">
-            <div class="control-item">
-                <label for="font-select">Choose Font:</label>
-                <select id="font-select">
-                    <option value="Readex Pro">Readex Pro</option>
-                    <option value="Roboto">Roboto</option>
-                    <option value="Lato">Lato</option>
-                    <option value="Montserrat">Montserrat</option>
-                </select>
-            </div>
+<div class="container">
 
-            <div class="control-item">
-                <label>Hide Shorts:</label>
-                <button id="toggleButton">
-                    <img id="toggleIcon" src="assets/on.svg" alt="Toggle Shorts">
-                </button>
-            </div>
-        </div>
-
-        <div class="note">
-            <p>*Reload the page after changes</p>
-        </div>
-
-        <div class="footer">
-            <span>Made by <a href="https://rayx81194.github.io/" target="_blank">Ray</a></span><br>
-            <span>Source on <a href="https://github.com/RayX81194/racistyt/" target="_blank">GitHub</a></span>
-        </div>
+    <div class="header">
+        <h1>RacistYT</h1>
     </div>
-    
-    <script src="popup.js"></script>
+
+    <div class="control-group">
+
+        <div class="control-item">
+            <label>Font</label>
+            <select id="font-select">
+                <option>Inter</option>
+                <option>Roboto</option>
+                <option>Lato</option>
+                <option>Montserrat</option>
+            </select>
+        </div>
+
+        <div class="control-item">
+            <label>Hide Shorts</label>
+            <label class="switch">
+                <input type="checkbox" id="toggleSwitch">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+    </div>
+
+    <div class="note">
+        Reload YouTube after changes
+    </div>
+
+    <div class="footer">
+        by <a href="https://rayx81194.github.io/" target="_blank">Ray</a>
+    </div>
+
+</div>
+
+<script src="popup.js"></script>
 </body>
 </html>
