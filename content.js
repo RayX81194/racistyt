@@ -1,55 +1,135 @@
-// content.js
+// ===== FONT HANDLING =====
 
-// Remove existing styles to avoid duplicate fonts
+// Remove old injected font styles
 function removeExistingStyles() {
-    const existingStyles = document.querySelectorAll('link[rel="stylesheet"]');
-    existingStyles.forEach(style => {
-        if (style.href.includes('-theme.css')) {
-            style.remove();
-        }
-    });
+    document.querySelectorAll('#custom-font-style').forEach(el => el.remove());
 }
 
-// Apply the selected font
+// Apply selected font
 function applyFont(font) {
+    removeExistingStyles();
+
     const style = document.createElement('style');
+    style.id = 'custom-font-style';
+
     style.textContent = `
-        @import url('https://fonts.googleapis.com/css2?family=${font.replace(/ /g, '+')}:wght@160..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=${font.replace(/ /g, '+')}:wght@400;600&display=swap');
+
         * {
             font-family: "${font}", sans-serif !important;
         }
     `;
+
     document.head.appendChild(style);
 }
 
-// Retrieve saved font and apply on page load
-chrome.storage.sync.get('selectedFont', ({ selectedFont }) => {
-    const font = selectedFont || 'Readex Pro';
-    applyFont(font);
-});
 
-// Function to toggle shorts visibility
-function toggleShortsVisibility(hide) {
-    document.querySelectorAll('ytd-mini-guide-entry-renderer .title').forEach((title) => {
-        if (title.textContent.trim() === 'Shorts') {
-            title.closest('ytd-mini-guide-entry-renderer').style.display = hide ? 'none' : '';
+// ===== SHORTS REMOVAL (IMPROVED) =====
+
+function hideShorts() {
+    const selectors = [
+        'ytd-reel-shelf-renderer',                 // Shorts shelf
+        'ytd-rich-section-renderer',              // Homepage Shorts sections
+        'a[href*="/shorts/"]',                    // Shorts links
+        'ytd-video-renderer a[href*="/shorts/"]'
+    ];
+
+    selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => el.remove());
+    });
+
+    // Sidebar "Shorts"
+    document.querySelectorAll('ytd-mini-guide-entry-renderer').forEach(el => {
+        if (el.innerText.includes('Shorts')) {
+            el.style.display = 'none';
         }
     });
 }
 
-// Apply initial shorts visibility state
-chrome.storage.sync.get('shortsHidden', ({ shortsHidden }) => {
-    toggleShortsVisibility(shortsHidden);
-});
+function showShorts() {
+    location.reload(); // simplest and reliable restore
+}
 
-// Listen for messages to update font or shorts visibility
+
+// ===== ELEMENT REMOVAL SYSTEM =====
+
+// Remove saved elements
+function removeSavedElements(selectors) {
+    selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => el.remove());
+    });
+}
+
+
+// Enable element picker
+function enableElementPicker() {
+    alert("Click any element to remove it");
+
+    function handleClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const el = e.target;
+
+        const selector = getUniqueSelector(el);
+
+        el.remove();
+
+        chrome.storage.sync.get('blockedSelectors', ({ blockedSelectors = [] }) => {
+            blockedSelectors.push(selector);
+            chrome.storage.sync.set({ blockedSelectors });
+        });
+
+        document.removeEventListener('click', handleClick, true);
+    }
+
+    document.addEventListener('click', handleClick, true);
+}
+
+
+// Generate selector (basic but works)
+function getUniqueSelector(el) {
+    if (el.id) return `#${el.id}`;
+
+    if (el.classList.length > 0) {
+        return el.tagName.toLowerCase() + '.' + [...el.classList].join('.');
+    }
+
+    return el.tagName.toLowerCase();
+}
+
+
+// ===== INITIAL LOAD =====
+
+chrome.storage.sync.get(
+    ['selectedFont', 'shortsHidden', 'blockedSelectors'],
+    ({ selectedFont, shortsHidden, blockedSelectors }) => {
+
+        applyFont(selectedFont || 'Inter');
+
+        if (shortsHidden) hideShorts();
+
+        if (blockedSelectors) removeSavedElements(blockedSelectors);
+    }
+);
+
+
+// ===== MESSAGE LISTENER =====
+
 chrome.runtime.onMessage.addListener((message) => {
     if (message.action === 'changeFont') {
-        removeExistingStyles();
         applyFont(message.font);
-    } else if (message.action === 'hideShorts') {
-        toggleShortsVisibility(true);
-    } else if (message.action === 'showShorts') {
-        toggleShortsVisibility(false);
+    }
+
+    if (message.action === 'hideShorts') {
+        hideShorts();
+    }
+
+    if (message.action === 'showShorts') {
+        showShorts();
+    }
+
+    if (message.action === 'enablePicker') {
+        enableElementPicker();
     }
 });

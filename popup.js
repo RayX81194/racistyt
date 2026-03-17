@@ -1,47 +1,58 @@
-// popup.js
+// FONT CHANGE
+const fontSelect = document.getElementById('font-select');
 
-// Font selection logic
-document.getElementById('font-select').addEventListener('change', function () {
+fontSelect.addEventListener('change', function () {
     const selectedFont = this.value;
-    chrome.storage.sync.set({ selectedFont }, () => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, { action: 'changeFont', font: selectedFont });
+
+    chrome.storage.sync.set({ selectedFont });
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            action: 'changeFont',
+            font: selectedFont
         });
     });
 });
 
-// Set font selector to saved font on popup load
+// Load saved font
 chrome.storage.sync.get('selectedFont', ({ selectedFont }) => {
     if (selectedFont) {
-        document.getElementById('font-select').value = selectedFont;
+        fontSelect.value = selectedFont;
     }
 });
 
-// Toggle shorts visibility
-const toggleButton = document.getElementById('toggleButton');
-const toggleIcon = document.getElementById('toggleIcon');
 
-// Update icon based on storage state
-function updateIcon(isEnabled) {
-    toggleIcon.src = isEnabled ? 'assets/off.svg' : 'assets/on.svg';
-}
+// SHORTS TOGGLE (NEW SWITCH)
+const toggleSwitch = document.getElementById('toggleSwitch');
 
-// Set initial state on popup load
+// Load initial state
 chrome.storage.sync.get('shortsHidden', ({ shortsHidden }) => {
-    updateIcon(shortsHidden);
+    toggleSwitch.checked = !!shortsHidden;
 });
 
-// Handle toggle click to update state and icon
-toggleButton.addEventListener('click', () => {
-    chrome.storage.sync.get('shortsHidden', ({ shortsHidden }) => {
-        const newState = !shortsHidden;
-        chrome.storage.sync.set({ shortsHidden: newState }, () => {
-            updateIcon(newState);
+// On toggle change
+toggleSwitch.addEventListener('change', () => {
+    const isEnabled = toggleSwitch.checked;
 
-            // Send message to toggle shorts visibility
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                chrome.tabs.sendMessage(tabs[0].id, { action: newState ? 'hideShorts' : 'showShorts' });
-            });
+    chrome.storage.sync.set({ shortsHidden: isEnabled });
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            action: isEnabled ? 'hideShorts' : 'showShorts'
         });
     });
 });
+
+
+// ELEMENT PICKER FEATURE
+const pickBtn = document.getElementById('pick-element');
+
+if (pickBtn) {
+    pickBtn.addEventListener('click', () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                action: 'enablePicker'
+            });
+        });
+    });
+}
