@@ -1,126 +1,167 @@
-/* black-theme.css */
+/* RacistYT v2 - black-theme.css
+   Everything is scoped to html[data-rytt="on"], which content.js sets.
+   Toggles are html[data-rytt-hide-*] attributes driven by the popup settings.
+   NOTE: selectors target YouTube's markup as last known; YouTube renames
+   elements often, so verify on the live site after each YouTube redesign. */
 
 :root {
-  --background-color: #000000;
-  --hover-color: #444444;
-  --active-color: #333333;
-  --bar:#FF0033;
-
+  --rytt-bg: #000000;
+  --rytt-hover: #1f1f1f;
+  --rytt-active: #2a2a2a;
+  --rytt-bar: #ff0033;
 }
 
-body {
-  background-color: var(--background-color) !important;
+/* ---------- Pure black theme via YouTube's own variables ---------- */
+html[data-rytt="on"],
+html[data-rytt="on"] body {
+  --yt-spec-base-background: var(--rytt-bg);
+  --yt-spec-raised-background: #0a0a0a;
+  --yt-spec-menu-background: #0f0f0f;
+  --yt-spec-general-background-a: var(--rytt-bg);
+  --yt-spec-general-background-b: var(--rytt-bg);
+  --yt-spec-general-background-c: var(--rytt-bg);
+  --yt-spec-badge-chip-background: #1a1a1a;
+  --yt-spec-10-percent-layer: #222;
+  --yt-spec-static-overlay-background-solid: var(--rytt-bg);
+  background: var(--rytt-bg) !important;
+  color-scheme: dark;
 }
 
-#content {
-  background-color: var(--background-color) !important;
+html[data-rytt="on"] ytd-app,
+html[data-rytt="on"] ytd-masthead,
+html[data-rytt="on"] #masthead-container,
+html[data-rytt="on"] ytd-mini-guide-renderer,
+html[data-rytt="on"] ytd-mini-guide-entry-renderer,
+html[data-rytt="on"] tp-yt-app-drawer,
+html[data-rytt="on"] #guide-content.ytd-app,
+html[data-rytt="on"] ytd-browse,
+html[data-rytt="on"] ytd-watch-flexy,
+html[data-rytt="on"] #chips-wrapper.ytd-feed-filter-chip-bar-renderer,
+html[data-rytt="on"] ytd-author-comment-badge-renderer,
+html[data-rytt="on"] #page-header.ytd-tabbed-page-header,
+html[data-rytt="on"] #tabs-inner-container.ytd-tabbed-page-header,
+html[data-rytt="on"] #page-header-banner {
+  background-color: var(--rytt-bg) !important;
 }
 
-#container {
-  background-color: var(--background-color) !important;
+/* Guide (sidebar) hover and selected states */
+html[data-rytt="on"] ytd-guide-entry-renderer:hover,
+html[data-rytt="on"] ytd-mini-guide-entry-renderer:hover {
+  background-color: var(--rytt-hover) !important;
+}
+html[data-rytt="on"] ytd-guide-entry-renderer[active] {
+  background-color: var(--rytt-active) !important;
 }
 
-#guide {
-  background-color: var(--background-color) !important;
+/* Return YouTube Dislike bar (third-party extension) */
+html[data-rytt="on"] #ryd-bar {
+  background: var(--rytt-bar) !important;
 }
 
-#guide .guide-item {
-  color: var(--text-color) !important;
+/* ---------- Accent colour (optional, set from popup) ---------- */
+html[data-rytt="on"][data-rytt-accent] {
+  --yt-spec-call-to-action: var(--rytt-accent);
+  --yt-spec-brand-link-text: var(--rytt-accent);
+}
+html[data-rytt="on"][data-rytt-accent] .ytp-play-progress,
+html[data-rytt="on"][data-rytt-accent] .ytp-scrubber-button,
+html[data-rytt="on"][data-rytt-accent] #progress.ytd-thumbnail-overlay-resume-playback-renderer {
+  background: var(--rytt-accent) !important;
 }
 
-#guide .guide-item:hover {
-  background-color: var(--hover-color) !important;
+/* ---------- Thumbnail dimming (replaces old #thumbnail filter) ---------- */
+html[data-rytt="on"] ytd-thumbnail img,
+html[data-rytt="on"] yt-thumbnail-view-model img {
+  opacity: var(--rytt-thumb-opacity, 0.7);
+  transition: opacity 0.15s ease;
+}
+html[data-rytt="on"] ytd-thumbnail:hover img,
+html[data-rytt="on"] yt-thumbnail-view-model:hover img {
+  opacity: 1;
 }
 
-#guide .guide-item.selected {
-  background-color: var(--active-color) !important;
-  color: var(--text-color) !important;
+/* ---------- Font override (keeps icon fonts intact) ---------- */
+html[data-rytt="on"][data-rytt-font] body,
+html[data-rytt="on"][data-rytt-font] input,
+html[data-rytt="on"][data-rytt-font] button,
+html[data-rytt="on"][data-rytt-font] textarea,
+html[data-rytt="on"][data-rytt-font] yt-formatted-string,
+html[data-rytt="on"][data-rytt-font] #video-title,
+html[data-rytt="on"][data-rytt-font] .yt-core-attributed-string,
+html[data-rytt="on"][data-rytt-font] .yt-spec-button-shape-next__button-text-content {
+  font-family: var(--rytt-font) !important;
 }
 
-ytd-mini-guide-renderer {
-  background-color: var(--background-color) !important;
+/* ---------- Grid columns ---------- */
+html[data-rytt="on"][data-rytt-cols] ytd-rich-grid-renderer {
+  --ytd-rich-grid-items-per-row: var(--rytt-cols) !important;
 }
 
-ytd-mini-guide-entry-renderer{
-  background-color: var(--background-color) !important ;
-}
+/* ---------- Hide toggles ---------- */
 
-ytd-reel-shelf-renderer{
+/* Shorts (uses :has, needs Chrome 105+ / Firefox 121+) */
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-reel-shelf-renderer,
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-rich-shelf-renderer[is-shorts],
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts]),
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-rich-section-renderer:has(ytd-reel-shelf-renderer),
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-rich-item-renderer:has(a[href^="/shorts/"]),
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-video-renderer:has(a[href^="/shorts/"]),
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-grid-video-renderer:has(a[href^="/shorts/"]),
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-compact-video-renderer:has(a[href^="/shorts/"]),
+html[data-rytt="on"][data-rytt-hide-shorts] yt-lockup-view-model:has(a[href^="/shorts/"]),
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-guide-entry-renderer:has(a[title="Shorts"]),
+html[data-rytt="on"][data-rytt-hide-shorts] ytd-mini-guide-entry-renderer[aria-label="Shorts"] {
   display: none !important;
 }
 
-#guide-content.ytd-app {
-  background-color: var(--background-color) !important;
-}
-
-#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
-  background-color: var(--background-color) !important;
-}
-
-ytd-author-comment-badge-renderer{
-  background-color: var(--background-color) !important ;
-}
-
-#page-header.ytd-tabbed-page-header{
-  background-color: var(--background-color) !important ;
-}
-
-#tabs-inner-container.ytd-tabbed-page-header{
-  background-color: var(--background-color) !important ;
-}
-
-#page-header-banner{
-  background-color: var(--background-color) !important ;
-}
-
-#ryd-bar{
-  background: var(--bar) !important ;
-}
-
-#sponsor-button {
-  display: none !important;
-}
-#subscribe-button{
-  display: none !important;
-}
-#chips{
+/* Watch page */
+html[data-rytt="on"][data-rytt-hide-comments] ytd-comments#comments,
+html[data-rytt="on"][data-rytt-hide-related] ytd-watch-flexy #secondary,
+html[data-rytt="on"][data-rytt-hide-endcards] .ytp-ce-element,
+html[data-rytt="on"][data-rytt-hide-endcards] .ytp-endscreen-content,
+html[data-rytt="on"][data-rytt-hide-endcards] .ytp-cards-teaser {
   display: none !important;
 }
 
-ytd-feed-filter-chip-bar-renderer{
+/* Carried over from v1 as individual toggles */
+html[data-rytt="on"][data-rytt-hide-chips] #chips,
+html[data-rytt="on"][data-rytt-hide-chips] ytd-feed-filter-chip-bar-renderer,
+html[data-rytt="on"][data-rytt-hide-voice] #voice-search-button,
+html[data-rytt="on"][data-rytt-hide-notifications] ytd-notification-topbar-button-renderer,
+html[data-rytt="on"][data-rytt-hide-topbar] ytd-topbar-menu-button-renderer,
+html[data-rytt="on"][data-rytt-hide-join] #sponsor-button,
+html[data-rytt="on"][data-rytt-hide-subscribe] #subscribe-button,
+html[data-rytt="on"][data-rytt-hide-minilabels] ytd-mini-guide-entry-renderer .title,
+html[data-rytt="on"][data-rytt-hide-recognition] ytd-recognition-shelf-renderer {
   display: none !important;
 }
 
-.title.ytd-mini-guide-entry-renderer{
-  display: none !important;
+/* Scrollbar */
+html[data-rytt="on"][data-rytt-hide-scrollbar] {
+  scrollbar-width: none;
 }
-
-.ytd-notification-topbar-button-renderer{
-  display: none !important;
-}
-
-#voice-search-button{
-  display: none !important;
-}
-
-ytd-topbar-menu-button-renderer.style-scope.ytd-masthead.style-default{
-  display: none !important;
-}
-
-ytd-recognition-shelf-renderer{
-  display: none !important;
-}
-
-#thumbnail{
-  filter: opacity(0.7)
-}
-
-
-::-webkit-scrollbar{
+html[data-rytt="on"][data-rytt-hide-scrollbar] ::-webkit-scrollbar {
   display: none;
 }
 
-
-
-
-
+/* ---------- Element picker UI ---------- */
+[data-rytt-picking] {
+  outline: 2px solid #ff3d3d !important;
+  outline-offset: -2px;
+  background-color: rgba(255, 61, 61, 0.15) !important;
+  cursor: crosshair !important;
+}
+#rytt-picker-bar {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #1a1a1a;
+  color: #fff;
+  font: 500 13px system-ui, sans-serif;
+  border: 1px solid #333;
+  pointer-events: none;
+}
