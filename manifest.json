@@ -1,25 +1,39 @@
 {
   "manifest_version": 3,
   "name": "RacistYT",
-  "version": "1.2",
-  "description": "Youtube but hates white theme.",
+  "version": "2.0.0",
+  "description": "A pure black OLED theme for YouTube with font, layout and cleanup options.",
   "action": {
-        "default_popup": "popup.html"
-    },
-  "permissions": [
-      "storage",
-      "activeTab"
-  ],
+    "default_title": "RacistYT",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "permissions": ["storage"],
   "content_scripts": [
-      {
-          "matches": ["*://www.youtube.com/*"],
-          "js": ["content.js"],
-          "css": ["black-theme.css"]
-      }
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*",
+        "*://music.youtube.com/*"
+      ],
+      "css": ["black-theme.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
   ],
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "racistyt@rayx81194",
+      "strict_min_version": "109.0"
+    }
   }
 }
