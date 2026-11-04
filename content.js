@@ -9,14 +9,43 @@ const root = document.documentElement;
 const DEFAULTS = {
   enabled: true,
   font: "default",        // "default" | "system" | any installed/Google font name
-  thumbDim: 85,           // thumbnail opacity, 30-100
+  thumbDim: 70,           // thumbnail opacity, 30-100 (v1 used 70)
   gridColumns: 0,         // 0 = YouTube default, otherwise 3-8
   accent: "",             // "" = no accent override, or a hex colour
-  hideShorts: false,
+  blockedSelectors: [],
+
+  // Hide toggles. The "true" ones reproduce the v1 look so that existing
+  // users see no change after updating. Flip any default here if you like.
+  hideShorts: true,
+  hideChips: true,
+  hideVoice: true,
+  hideNotifications: true,
+  hideTopbar: true,
+  hideJoin: true,
+  hideSubscribe: true,
+  hideMiniLabels: true,
+  hideRecognition: true,
+  hideScrollbar: true,
   hideComments: false,
   hideRelated: false,
-  hideEndCards: false,
-  blockedSelectors: []
+  hideEndCards: false
+};
+
+// settings key -> data-rytt-hide-<suffix> attribute on <html>
+const HIDE_FLAGS = {
+  hideShorts: "shorts",
+  hideChips: "chips",
+  hideVoice: "voice",
+  hideNotifications: "notifications",
+  hideTopbar: "topbar",
+  hideJoin: "join",
+  hideSubscribe: "subscribe",
+  hideMiniLabels: "minilabels",
+  hideRecognition: "recognition",
+  hideScrollbar: "scrollbar",
+  hideComments: "comments",
+  hideRelated: "related",
+  hideEndCards: "endcards"
 };
 
 const FONT_STACKS = {
@@ -94,10 +123,9 @@ function applyAll() {
     root.removeAttribute("data-rytt-accent");
   }
 
-  setFlag("data-rytt-hide-shorts", settings.hideShorts);
-  setFlag("data-rytt-hide-comments", settings.hideComments);
-  setFlag("data-rytt-hide-related", settings.hideRelated);
-  setFlag("data-rytt-hide-endcards", settings.hideEndCards);
+  for (const [key, suffix] of Object.entries(HIDE_FLAGS)) {
+    setFlag(`data-rytt-hide-${suffix}`, !!settings[key]);
+  }
 
   applyFont(settings.enabled ? settings.font : "default");
   applyBlocked(settings.enabled ? settings.blockedSelectors : []);
